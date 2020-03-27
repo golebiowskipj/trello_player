@@ -1,60 +1,98 @@
-/* By Athlon Front-End Team */
-
 /* Core variables */
 @import 'base/vars';
-
-/* CSS Reset */
-@import 'base/reset';
-
-/* CSS print */
-@import 'base/print';
 
 /* Fonts */
 @import 'base/fonts';
 
-/* Mixins, helpers and functions */
-@import 'base/mixins';
+/* CSS Reset */
+@import 'base/reset';
 
-/* Vendor */
-
-/* Components */
-
-/* Browser specific styles */
-@import 'dirty/hacks';
-
-/* Demo styles */
-
-body {
-  background: $body-background-color;
-  color: $foreground-color;
-  font-family: 'DINP-R', arial, serif;
+html, body {
+  font-size: 18px;
+  color: $color-main-font;
+  background-color: $color-body-background;
 }
 
-header {
-  font-size: 2em;
-  margin: 20px;
-  color: $caption-color;
-  text-align: center;
-  background: $foreground-color url('../images/design/heading.png') center 20px no-repeat;
-  padding: 60px 30px 30px;
-  background-size: 160px;
+.hidden-below-900 {
+  display: none;
+
+  @media(min-width: 900px) {
+    display: block;
+
+    &--span {
+      display: inline-block;
+    }
+  }
 }
 
-main {
-  color: $foreground-color;
-  text-align: center;
-  padding: 10px;
-}
 
-a {
-  color: $link-color;
-}
+.header {
+  margin: 1rem auto;
+  padding: .5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-address {
-  color: $accent-color;
+  @media(min-width: 900px) {
+    padding: .5rem calc((100vw - 900px - .5rem) / 2);
+    margin-bottom: 1rem;
+  }
 }
 
 .logo {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  margin-right: 12px;
+}
+
+.main {
+  max-width: 90vw;
+  width: 900px;
   margin: 0 auto;
-  display: block;
+}
+
+.heading {
+  @extend .f-main;
+
+  &--main {
+    font-size: 1.5rem;
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  @media(min-width: $tablet) {
+     &--main {
+       font-size: 2rem;
+     }
+  }
+}
+
+.section {
+  &--player {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.video {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+}
+
+.controls {
+  margin: .25rem auto;
+  display: flex;
+}
+
+.controls__button {
+  box-shadow: none;
+  border: 1px solid black;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

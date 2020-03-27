@@ -25,7 +25,8 @@
     "node": ">=10.13.0"
   },
   "dependencies": {
-    "autoprefixer": "^9.7.5"
+    "autoprefixer": "^9.7.5",
+    "core-js": "^3.6.4"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

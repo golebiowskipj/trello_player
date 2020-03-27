@@ -1,0 +1,1 @@
+export default 'elo jestem wyeksportowany';
