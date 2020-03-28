@@ -7,6 +7,9 @@
 /* CSS Reset */
 @import 'base/reset';
 
+/* Components */
+@import 'components/popup.scss';
+
 html, body {
   font-size: 18px;
   color: $color-main-font;
@@ -23,6 +26,10 @@ html, body {
       display: inline-block;
     }
   }
+}
+
+button {
+  cursor: pointer;
 }
 
 
@@ -95,4 +102,38 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.video-details {
+  width: 100%;
+}
+
+.video-details__progress-bar {
+  margin: 5px auto;
+  width: 100%;
+  max-width: 500px;
+  height: 24px;
+  background-color: rgba(0,0,0,.1);
+  display: flex;
+  align-items: center;
+}
+
+.video-details__progress-bar-fill {
+  background-color: rgba(255,0,0,.3);
+  width: 0;
+  height: 80%;
+  transition: width .1s linear;
+}
+
+.section--list-of-adnotations {
+  border: 1px solid black;
+}
+
+.add-button {
+  box-shadow: none;
+  padding: .5rem .75rem;
+  background-color: $color-theme;
+  color: $color-theme-font;
+  display: block;
+  margin: 0 0 0 auto;
 }

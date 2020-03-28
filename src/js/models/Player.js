@@ -2,8 +2,6 @@ export class Player {
     constructor(video) {
         this.video = video;
         this.isPlaying = false;
-
-        console.log('player cons', this.video);
     }
 
     playVideo() {
@@ -22,6 +20,24 @@ export class Player {
 
     rewindForward() {
         this.video.currentTime = this.video.currentTime + 5;
-        console.log(this.video.currentTime)
+    }
+
+    stopVideo() {
+        this.video.currentTime = 0;
+    }
+
+    getVideoProgress() {
+        const duration = this.video.duration;
+        const currentTime = this.video.currentTime;
+        const videoProgress = currentTime / duration * 100; //in %
+
+        return videoProgress;
+    }
+
+    handleProgressBarRewind(e, clickedElement) {
+        const width = clickedElement.getBoundingClientRect().width;
+        const progress = e.offsetX / width;
+
+        this.video.currentTime = progress * this.video.duration;
     }
 }
