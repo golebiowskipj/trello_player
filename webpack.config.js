@@ -42,7 +42,7 @@ const config = function(env, args) {
     module: {
       rules: [
         {
-          test: /\.scss$/,
+          test: /\.(sa|sc|c)ss$/,
           use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
         },
         {

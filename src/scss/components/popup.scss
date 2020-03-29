@@ -36,10 +36,6 @@
     padding: .25em .5rem;
 }
 
-.form {
-
-}
-
 .form__adnotations {
     display: flex;
     flex-direction: column;
@@ -48,6 +44,7 @@
         height: 36px;
         padding-left: 5px;
         font-size: 1rem;
+        border: 1px solid black;
     }
 }
 

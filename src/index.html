@@ -15,10 +15,13 @@
   </header>
   <main class="main">
     <section class="section section--player">
-      <video class="video js-video">
-        <source src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4">
-        <p>Your browser does not support the video tag.</p>
-      </video>
+      <div class="drop-zone-container">
+        <div class="drop-zone js-dropzone" videozone="true"></div>
+        <video class="video js-video">
+          <source src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" type="video/mp4">
+          <p>Your browser does not support the video tag.</p>
+        </video>
+      </div>
       <article class="controls">
         <button class="controls__button constrols__button--back js-back">back</button>
         <button class="controls__button constrols__button--play js-play">play</button>
@@ -30,9 +33,11 @@
           <div class="video-details__progress-bar-fill js-video-progress"></div>
         </div>
       </article>
+      <article class="dragged-controls js-dragged-controls"></article>
     </section>
     <section class="section section--list-of-adnotations">
       <button class="add-button js-add-adnotation-button">new adnotation</button>
+      <article class="list js-list js-dropzone" listzone="true"></article>
     </section>
   </main>
 </body>

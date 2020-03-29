@@ -1,84 +1,94 @@
 import '../scss/app.scss';
 // elements
 import { $ } from './helpers/elements';
+// helpers
+import { idGen } from './helpers/idGen';
 // models
 import { Player } from './models/Player';
-import { AdnotationsList } from './models/AdnotationsList';
-import { addNewAdnotation } from './views/adnotationsListView';
-import { openCreateAdnotationModal } from './views/createAdnotationView';
 import { Adnotation } from './models/Adnotation';
 // views
 import { updateProgressBar } from './views/playerView';
-import { CreateAdnotation } from './models/Adnotation';
-
-console.log('app is running');
-// global state of the app
-/** 
- * - video
- * - list of addnotations
- * */
+import { openCreateAdnotationModal } from './views/adnotationView';
+import { renderAdnotations, showAdnotation, hideAdnotation } from './views/adnotationsListView';
+import { getDraggedAdnotations } from './views/adnotationsControlsView';
+import { renderRangePicker, renderRangePickers } from './views/rangePickerView';
+import { RangePicker } from './models/RangePicker';
 
 
-let state = {
-    adnotations: [],
-};
+const init = () => {
+    let state = {
+        adnotations: [],
+    };
 
-const setState = (property, value) => Object.assign(state, { ...state, [property]: value });
+    const setState = (property, value) => Object.assign(state, { ...state, [property]: value });
 
-// controllers 
+    // controllers ----------- 
+    // player controller
+    const player = new Player($.video);
+    setState('player', player);
 
-// player controller
+    $.play.addEventListener('click', () => player.playVideo());
+    $.pause.addEventListener('click', () => player.pauseVideo());
+    $.back.addEventListener('click', () => player.rewindBack());
+    $.forward.addEventListener('click', () => player.rewindForward());
+    $.video.addEventListener('timeupdate', () => {
+        updateProgressBar(player.getVideoProgress());
+        player.showHideAdnotations(state.adnotations, showAdnotation, hideAdnotation);
+    });
+    $.progressContainer.addEventListener('click', (e) => player.handleProgressBarRewind(e, e.target.closest('.js-video-progress-container')));
 
-const player = new Player($.video);
-setState('player', player);
+    // add new adnotation controller
+    $.addNewAdnotation.addEventListener('click', () => {
+        openCreateAdnotationModal(setState, state, idGen(state), $.video, Adnotation, () => renderAdnotations(state.adnotations, renderRangePickers, RangePicker));
+    });
 
-$.play.addEventListener('click', () => player.playVideo());
-$.pause.addEventListener('click', () => player.pauseVideo());
-$.back.addEventListener('click', () => player.rewindBack());
-$.forward.addEventListener('click', () => player.rewindForward());
-$.video.addEventListener('timeupdate', () => updateProgressBar(player.getVideoProgress()));
-$.progressContainer.addEventListener('click', (e) => player.handleProgressBarRewind(e, e.target.closest('.js-video-progress-container')));
+    // drag and drop
 
-// add new adnotation controller
+    $.dropzone.forEach(zone => {
+        zone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+    });
 
-$.addNewAdnotation.addEventListener('click', () => {
-    openCreateAdnotationModal(setState, state, idGen(), $.video, Adnotation, ()=>{});
-});
+    $.dropzone.forEach(zone => {
+        zone.addEventListener('dragenter', (e) => {
+            e.target.classList.add('drop-zone--active');
+        })
+    });
 
-// adnotation list controller
+    $.dropzone.forEach(zone => {
+        zone.addEventListener('dragleave', (e) => {
+            e.target.classList.remove('drop-zone--active');
+        })
+    });
 
-const adnotationsList = new AdnotationsList();
+    $.dropzone.forEach(zone => {
+        zone.addEventListener('drop', (e) => {
+            e.target.classList.remove('drop-zone--active');
+            const id = e.dataTransfer.getData('text');
+            const draggableElement = document.getElementById(id);
+            const dropzone = event.target;
+            const draggableElementId = draggableElement.id;
 
+            const ad = state.adnotations.find(ad => ad.id == draggableElementId);
 
-const idGen = () => {
-    let newId = state.adnotations.length + 1;
-    state.adnotations.forEach(adnotation => {
-        if (adnotation.id === newId) {
-            return newId++;
-        }
-    })
-    return newId;
+            if (dropzone.getAttribute('videozone')) {
+                ad.isDragged = true;
+            } else if (dropzone.getAttribute('listzone')) {
+                ad.isDragged = false;
+            }
+
+            renderRangePickers(state.adnotations, RangePicker);
+
+            dropzone.appendChild(draggableElement);
+            e.dataTransfer.clearData();
+        });
+    });
+
+    window.state = state;
 }
 
-window.state = state;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// ===============================================
+$.video.addEventListener('loadedmetadata', () => {
+    init();
+});

@@ -8,5 +8,15 @@ export class Adnotation {
         this.offsetX = 0;
         this.offsetY = 0;
         this.isDragged = false;
+        this.video = video;
+        this.isVisible = false;
+    }
+
+    setStart = (value) => {
+        this.start = value;
+    }
+
+    setStop = (value) => {
+        this.stop = value;
     }
 }

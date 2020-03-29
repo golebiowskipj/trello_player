@@ -1,7 +1,6 @@
 import { $, selectors } from '../helpers/elements';
 
 export const openCreateAdnotationModal = (setState, state, id, video, Adnotation, rerenderList) => {
-    let data;
     const template = `
     <section class="popup js-popup">
         <div class="popup__overlay js-popup-overlay"></div>
@@ -10,7 +9,7 @@ export const openCreateAdnotationModal = (setState, state, id, video, Adnotation
         <form class="form js-form">
             <article class="form__adnotations">
                 <label class="form__label" for="adnotation-text">Adnotation text:</label>
-                <input class="js-text-input" id="adnotation-text" type="text" maxlength="80" autocomplete="off" />
+                <input class="js-text-input" id="adnotation-text" type="text" maxlength="60" autocomplete="off" required />
             </article>
             <article class="form__sizes">
                 <p>Sizes:</p>

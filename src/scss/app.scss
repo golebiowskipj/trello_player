@@ -9,6 +9,12 @@
 
 /* Components */
 @import 'components/popup.scss';
+@import 'components/list.scss';
+@import 'components/player.scss';
+@import 'components/video_controls.scss';
+@import 'components/details.scss';
+@import 'components/dragged_controls.scss';
+
 
 html, body {
   font-size: 18px;
@@ -31,7 +37,6 @@ html, body {
 button {
   cursor: pointer;
 }
-
 
 .header {
   margin: 1rem auto;
@@ -84,56 +89,3 @@ button {
   }
 }
 
-.video {
-  width: 100%;
-  max-width: 500px;
-  height: auto;
-}
-
-.controls {
-  margin: .25rem auto;
-  display: flex;
-}
-
-.controls__button {
-  box-shadow: none;
-  border: 1px solid black;
-  background: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.video-details {
-  width: 100%;
-}
-
-.video-details__progress-bar {
-  margin: 5px auto;
-  width: 100%;
-  max-width: 500px;
-  height: 24px;
-  background-color: rgba(0,0,0,.1);
-  display: flex;
-  align-items: center;
-}
-
-.video-details__progress-bar-fill {
-  background-color: rgba(255,0,0,.3);
-  width: 0;
-  height: 80%;
-  transition: width .1s linear;
-}
-
-.section--list-of-adnotations {
-  border: 1px solid black;
-}
-
-.add-button {
-  box-shadow: none;
-  padding: .5rem .75rem;
-  background-color: $color-theme;
-  color: $color-theme-font;
-  display: block;
-  margin: 0 0 0 auto;
-}

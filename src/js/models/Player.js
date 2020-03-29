@@ -34,6 +34,25 @@ export class Player {
         return videoProgress;
     }
 
+    showHideAdnotations(adnotations, show, hide) {
+        const filtered = adnotations.filter(adnotation => adnotation.isDragged);
+
+        filtered.forEach(adnotation => {
+            // visible
+            if (adnotation.start <= this.video.currentTime && adnotation.stop >= this.video.currentTime) {
+                if (adnotation.isVisible) {
+                    return;
+                } else {
+                    show(adnotation.id);
+                    adnotation.isVisible = true;
+                }
+            } else {
+                hide(adnotation.id);
+                adnotation.isVisible = false;
+            }
+        });
+    }
+
     handleProgressBarRewind(e, clickedElement) {
         const width = clickedElement.getBoundingClientRect().width;
         const progress = e.offsetX / width;

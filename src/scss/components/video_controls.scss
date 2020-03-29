@@ -1,0 +1,13 @@
+.controls {
+    margin: .25rem auto;
+    display: flex;
+  }
+  
+  .controls__button {
+    box-shadow: none;
+    border: 1px solid black;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

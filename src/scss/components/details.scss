@@ -1,0 +1,21 @@
+.video-details {
+    width: 100%;
+  }
+  
+  .video-details__progress-bar {
+    margin: 5px auto;
+    width: 100%;
+    max-width: 500px;
+    height: 12px;
+    background-color: white;
+    border: 1px solid rgba(0,0,0,.3);
+    display: flex;
+    align-items: center;
+  }
+  
+  .video-details__progress-bar-fill {
+    background-color: rgba(255,0,0,.3);
+    width: 0;
+    height: 80%;
+    transition: width .1s linear;
+  }
