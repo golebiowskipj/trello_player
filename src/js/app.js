@@ -62,21 +62,12 @@ const init = () => {
         zone.addEventListener('dragover', (e) => {
             e.preventDefault();
         });
-    });
-
-    $.dropzone.forEach(zone => {
         zone.addEventListener('dragenter', (e) => {
             e.target.classList.add('drop-zone--active');
-        })
-    });
-
-    $.dropzone.forEach(zone => {
+        });
         zone.addEventListener('dragleave', (e) => {
             e.target.classList.remove('drop-zone--active');
-        })
-    });
-
-    $.dropzone.forEach(zone => {
+        });
         zone.addEventListener('drop', (e) => {
             e.target.classList.remove('drop-zone--active');
             const data = JSON.parse(e.dataTransfer.getData('text'));
@@ -107,6 +98,9 @@ const init = () => {
             if (dropzone.getAttribute('videozone')) {
                 if (draggableElement.parentNode.getAttribute('videozone')) return;
             }
+
+            if (dropzone.nodeName == 'TEXTAREA') return;
+
             dropzone.appendChild(draggableElement);
             e.dataTransfer.clearData();
         });
