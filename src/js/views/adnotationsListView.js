@@ -13,8 +13,8 @@ export const renderAdnotations = (adnotationsList, renderRangePickers, RangePick
         template.setAttribute('draggable', true);
 
         template.addEventListener('change', (e) => handleAdnotationTextChange(e, ad, renderRangePickers, adnotationsList, RangePicker));
-        template.addEventListener('dragstart', handleDragStart);
-        template.addEventListener('dragend', handleDragEnd);
+        template.addEventListener('dragstart', (e) => handleDragStart(e, ad));
+        template.addEventListener('dragend', (e) => handleDragEnd(e, ad));
 
         fragment.appendChild(template);
     });
@@ -28,12 +28,19 @@ export const handleAdnotationTextChange = (e, adnotation, renderRangePickers, li
     renderRangePickers(list, RangePicker);
 }
 
-export const handleDragStart = (e) => {
+export const handleDragStart = (e, adnotation) => {
     e.currentTarget.classList.add('list__item--dragging');
-    e.dataTransfer.setData('text/plain', e.target.id)
+
+    const data = {
+        id: e.target.id,
+        x: e.offsetX,
+        y: e.offsetY,
+    }
+
+    e.dataTransfer.setData('text/plain', JSON.stringify(data));
 }
 
-export const handleDragEnd = (e) => {
+export const handleDragEnd = (e, adnotation) => {
     e.target.classList.remove('list__item--dragging');
 }
 

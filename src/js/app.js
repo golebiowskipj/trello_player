@@ -10,9 +10,23 @@ import { Adnotation } from './models/Adnotation';
 import { updateProgressBar } from './views/playerView';
 import { openCreateAdnotationModal } from './views/adnotationView';
 import { renderAdnotations, showAdnotation, hideAdnotation } from './views/adnotationsListView';
-import { getDraggedAdnotations } from './views/adnotationsControlsView';
-import { renderRangePicker, renderRangePickers } from './views/rangePickerView';
+import { renderRangePickers } from './views/rangePickerView';
 import { RangePicker } from './models/RangePicker';
+
+/*
+- throtling on adnotation visibility 
+- adnotation size connected with player size 
+- consistent state update 
+- delete event listeners after they become useless
+- styling by adding classes, not inline styles in js
+- apply functionality to mobile phones (touch screen)
+- remove unused selectors and elements from helpers/elements
+- give better html calsses names
+- style the app...
+- maybe change adnotations from text area to some more elegant, resizable element (styled div with state that changes it to input so user can edit it)
+- ADD REMOVE-ADNOTATION BUTTON
+- ADD STOP BUTTON
+*/
 
 
 const init = () => {
@@ -65,7 +79,8 @@ const init = () => {
     $.dropzone.forEach(zone => {
         zone.addEventListener('drop', (e) => {
             e.target.classList.remove('drop-zone--active');
-            const id = e.dataTransfer.getData('text');
+            const data = JSON.parse(e.dataTransfer.getData('text'));
+            const { id, x, y } = data;
             const draggableElement = document.getElementById(id);
             const dropzone = event.target;
             const draggableElementId = draggableElement.id;
@@ -74,12 +89,20 @@ const init = () => {
 
             if (dropzone.getAttribute('videozone')) {
                 ad.isDragged = true;
+                draggableElement.style.position = "absolute";
+                draggableElement.style.top = `${e.offsetY - y}px`;
+                draggableElement.style.left = `${e.offsetX - x}px`;
+
             } else if (dropzone.getAttribute('listzone')) {
                 ad.isDragged = false;
+                draggableElement.style.position = "static";
             }
 
             renderRangePickers(state.adnotations, RangePicker);
-
+            // without this if statement there was  'Failed to execute 'appendChild' on 'Node': The new child element contains the parent.' ERROR
+            if (dropzone.getAttribute('videozone')) {
+                if (draggableElement.parentNode.getAttribute('videozone')) return;
+            }
             dropzone.appendChild(draggableElement);
             e.dataTransfer.clearData();
         });
