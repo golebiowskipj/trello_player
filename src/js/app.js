@@ -88,10 +88,14 @@ const init = () => {
             const ad = state.adnotations.find(ad => ad.id == draggableElementId);
 
             if (dropzone.getAttribute('videozone')) {
+                const adX = e.offsetX - x;
+                const adY = e.offsetY - y;
                 ad.isDragged = true;
+                ad.offsetX = adX;
+                ad.offsetY = adY;
                 draggableElement.style.position = "absolute";
-                draggableElement.style.top = `${e.offsetY - y}px`;
-                draggableElement.style.left = `${e.offsetX - x}px`;
+                draggableElement.style.top = `${adY}px`;
+                draggableElement.style.left = `${adX}px`;
 
             } else if (dropzone.getAttribute('listzone')) {
                 ad.isDragged = false;
